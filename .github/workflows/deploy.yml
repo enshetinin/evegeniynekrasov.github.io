@@ -1,11 +1,11 @@
-name: Deploy to github pages
+name: Deploy Vite to GitHub Pages
 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-  
+
 permissions:
   contents: read
   pages: write
@@ -17,29 +17,36 @@ concurrency:
 
 jobs:
   deploy:
-    - name: Download repository
-      uses: actions/checkout@v6
+    runs-on: ubuntu-latest
 
-    - name: Configure NodeJS
-      uses: actions/setup-node@v6
-      with:
-        node-version: 24
-        cache: npm
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
-    - name: Install dependencies
-      run: npm ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
 
-    - name: Compile app
-      run: npm run build
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
 
-    - name: Configure Github pages
-      uses: actions/configure-pages@v6
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Upload artifact
-      uses: actions/upload-page-artifact@v5
-      with:
-        path: ./dist
+      - name: Build application
+        run: npm run build
 
-    - name: Deploy to Github pages
-      id: deployment
-      uses: actions/deploy-pages@v5
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
