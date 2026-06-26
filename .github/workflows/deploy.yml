@@ -1,0 +1,45 @@
+name: Deploy to github pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    - name: Download repository
+      uses: actions/checkout@v6
+
+    - name: Configure NodeJS
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: npm
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Compile app
+      run: npm run build
+
+    - name: Configure Github pages
+      uses: actions/configure-pages@v6
+
+    - name: Upload artifact
+      uses: actions/upload-page-artifact@v5
+      with:
+        path: ./dist
+
+    - name: Deploy to Github pages
+      id: deployment
+      uses: actions/deploy-pages@v5
