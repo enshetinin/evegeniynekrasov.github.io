@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site, socialLinks } from "../data/site";
+---
+
+<BaseLayout
+    title={`Links — ${site.name}`}
+    description={`Enlaces y formas de contactar con ${site.name}.`}>
+    <header class="page-header">
+        <p class="page-number">06</p>
+        <h1>Links</h1>
+        <p>Perfiles, repositorios y formas de contactar conmigo.</p>
+    </header>
+
+    <section class="page-content">
+        <ul class="link-list large-links">
+            {
+                socialLinks.map((link) => (
+                    <li>
+                        <a href={link.href}>
+                            <div>
+                                <h2>{link.label}</h2>
+                                <p>{link.description}</p>
+                            </div>
+
+                            <span aria-hidden="true">↗</span>
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </section>
+</BaseLayout>

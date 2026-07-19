@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { projects } from "../data/projects";
+---
+
+<BaseLayout
+    title="Proyectos"
+    description="Proyectos personales y profesionales.">
+    <header>
+        <h1>Proyectos</h1>
+
+        <p>Una lista de cosas que he construido.</p>
+    </header>
+
+    <ol>
+        {
+            projects.map((project) => (
+                <li>
+                    <article>
+                        <h2>
+                            <a
+                                href={project.href}
+                                target="_blank">
+                                {project.title}
+                            </a>
+                        </h2>
+
+                        <p>{project.description}</p>
+
+                        <p>
+                            {project.year} · {project.status}
+                        </p>
+                    </article>
+                </li>
+            ))
+        }
+    </ol>
+</BaseLayout>

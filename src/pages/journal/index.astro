@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const posts = (
+    await getCollection(
+        "journal",
+        ({ data }) => !import.meta.env.PROD || !data.draft,
+    )
+).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+---
+
+<BaseLayout
+    title="Journal"
+    description="Artículos y notas sobre software e internet.">
+    <header>
+        <h1>Journal</h1>
+
+        <p>Artículos, notas y aprendizajes.</p>
+    </header>
+
+    <ol>
+        {
+            posts.map((post) => (
+                <li>
+                    <article>
+                        <h2>
+                            <a href={`/journal/${post.id}/`}>
+                                {post.data.title}
+                            </a>
+                        </h2>
+
+                        <p>{post.data.description}</p>
+
+                        <time datetime={post.data.publishedAt.toISOString()}>
+                            {post.data.publishedAt.toLocaleDateString("es-ES")}
+                        </time>
+                    </article>
+                </li>
+            ))
+        }
+    </ol>
+</BaseLayout>

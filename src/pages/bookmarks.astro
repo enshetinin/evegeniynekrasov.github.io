@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { bookmarks } from "../data/bookmarks";
+---
+
+<BaseLayout
+    title="Bookmarks"
+    description="Enlaces que quiero conservar.">
+    <header>
+        <h1>Bookmarks</h1>
+
+        <p>Páginas, artículos y herramientas que quiero volver a encontrar.</p>
+    </header>
+
+    <ul>
+        {
+            bookmarks.map((bookmark) => (
+                <li>
+                    <article>
+                        <h2>
+                            <a
+                                href={bookmark.href}
+                                target="_blank"
+                                rel="noreferrer">
+                                {bookmark.title}
+                            </a>
+                        </h2>
+
+                        <p>{bookmark.description}</p>
+
+                        <small>{bookmark.category}</small>
+                    </article>
+                </li>
+            ))
+        }
+    </ul>
+</BaseLayout>

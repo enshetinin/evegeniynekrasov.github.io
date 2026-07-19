@@ -1,0 +1,49 @@
+---
+import { navigation, site } from "../data/site";
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+    if (href === "/") {
+        return currentPath === "/";
+    }
+
+    return currentPath.startsWith(href);
+}
+---
+
+<aside class="sidebar">
+    <header>
+        <a href="/">
+            <strong>{site.name}</strong>
+        </a>
+
+        <p>{site.description}</p>
+    </header>
+
+    <nav aria-label="Navegación principal">
+        <ul>
+            {
+                navigation.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            aria-current={
+                                isActive(item.href) ? "page" : undefined
+                            }>
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </nav>
+
+    <footer>
+        <ul>
+            <li>
+                <a href={site.github}>GitHub</a>
+            </li>
+        </ul>
+    </footer>
+</aside>

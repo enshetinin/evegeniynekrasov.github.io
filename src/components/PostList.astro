@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import { formatDate } from "../lib/date";
+import { path } from "../lib/path";
+
+interface Props {
+    posts: CollectionEntry<"journal">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+    {
+        posts.map((post) => (
+            <li class="post-list-item">
+                <a href={path(`journal/${post.id}/`)}>
+                    <div class="post-list-main">
+                        <p class="item-meta">
+                            <span>{post.data.category}</span>
+                            <time
+                                datetime={post.data.publishedAt.toISOString()}>
+                                {formatDate(post.data.publishedAt)}
+                            </time>
+                        </p>
+
+                        <h3>{post.data.title}</h3>
+                        <p>{post.data.description}</p>
+                    </div>
+
+                    <span
+                        class="item-arrow"
+                        aria-hidden="true">
+                        ↗
+                    </span>
+                </a>
+            </li>
+        ))
+    }
+</ul>

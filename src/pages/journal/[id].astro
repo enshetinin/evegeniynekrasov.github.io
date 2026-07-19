@@ -1,0 +1,95 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { site } from "../../data/site";
+import { formatDate } from "../../lib/date";
+import { path } from "../../lib/path";
+
+interface Props {
+    post: CollectionEntry<"journal">;
+}
+
+export async function getStaticPaths() {
+    const posts = await getCollection("journal", ({ data }) => !data.draft);
+
+    return posts.map((post) => ({
+        params: {
+            id: post.id,
+        },
+        props: {
+            post,
+        },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+    title={`${post.data.title} — ${site.name}`}
+    description={post.data.description}>
+    <article class="post">
+        <header class="post-header frame">
+            <div class="post-header-side">
+                <a
+                    class="back-link"
+                    href={path("journal/")}>
+                    ← Journal
+                </a>
+
+                <dl>
+                    <div>
+                        <dt>Publicado</dt>
+                        <dd>
+                            <time
+                                datetime={post.data.publishedAt.toISOString()}>
+                                {formatDate(post.data.publishedAt)}
+                            </time>
+                        </dd>
+                    </div>
+
+                    <div>
+                        <dt>Tema</dt>
+                        <dd>{post.data.category}</dd>
+                    </div>
+
+                    {
+                        post.data.tags.length > 0 && (
+                            <div>
+                                <dt>Etiquetas</dt>
+
+                                <dd>{post.data.tags.join(", ")}</dd>
+                            </div>
+                        )
+                    }
+                </dl>
+            </div>
+
+            <div class="post-header-main flow">
+                <p class="eyebrow">{post.data.category}</p>
+
+                <h1>{post.data.title}</h1>
+
+                <p class="post-description">
+                    {post.data.description}
+                </p>
+            </div>
+        </header>
+
+        <div class="post-body frame">
+            <aside class="post-aside">
+                <p>
+                    Escrito por<br />
+                    <strong>{site.name}</strong>
+                </p>
+            </aside>
+
+            <div class="prose flow">
+                <Content />
+            </div>
+        </div>
+    </article>
+</BaseLayout>
