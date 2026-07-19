@@ -1,19 +1,17 @@
 ---
-import type { Project } from "../data/projects";
+import type { Project } from '../data/projects'
 
 interface Props {
-    project: Project;
+    project: Project
 }
 
-const { project } = Astro.props;
+const { project } = Astro.props
 ---
 
 <article class="project-card">
     <div class="project-card-header">
         <div>
-            <p class="item-meta">
-                {project.year} · {project.status}
-            </p>
+            <p class="item-meta">{project.year} · {project.status}</p>
 
             <h3>{project.title}</h3>
         </div>
@@ -23,21 +21,19 @@ const { project } = Astro.props;
             href={project.href}
             target={project.href.startsWith("http") ? "_blank" : undefined}
             rel={project.href.startsWith("http") ? "noreferrer" : undefined}
-            aria-label={`Abrir ${project.title}`}>
+            aria-label={`Abrir ${project.title}`}
+        >
             ↗
         </a>
     </div>
 
     <p>{project.description}</p>
 
-    <ul
-        class="tag-list"
-        aria-label="Tecnologías">
+    <ul class="tag-list" aria-label="Tecnologías">
         {project.technologies.map((technology) => <li>{technology}</li>)}
     </ul>
 
-    {
-        project.repository && (
+    {project.repository && (
             <a
                 class="text-link project-repository"
                 href={project.repository}
@@ -46,6 +42,5 @@ const { project } = Astro.props;
                 Ver repositorio
                 <span aria-hidden="true">↗</span>
             </a>
-        )
-    }
+        )}
 </article>

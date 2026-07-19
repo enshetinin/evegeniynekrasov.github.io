@@ -1,11 +1,9 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { projects } from "../data/projects";
+import { projects } from '../data/projects'
+import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<BaseLayout
-    title="Proyectos"
-    description="Proyectos personales y profesionales.">
+<BaseLayout title="Proyectos" description="Proyectos personales y profesionales.">
     <header>
         <h1>Proyectos</h1>
 
@@ -13,14 +11,15 @@ import { projects } from "../data/projects";
     </header>
 
     <ol>
-        {
-            projects.map((project) => (
+        {projects.map((project) => (
                 <li>
                     <article>
                         <h2>
                             <a
                                 href={project.href}
-                                target="_blank">
+                                target="_blank"
+                                rel="noopener"
+                            >
                                 {project.title}
                             </a>
                         </h2>
@@ -32,7 +31,6 @@ import { projects } from "../data/projects";
                         </p>
                     </article>
                 </li>
-            ))
-        }
+            ))}
     </ol>
 </BaseLayout>

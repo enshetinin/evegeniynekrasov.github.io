@@ -4,14 +4,20 @@
     "version": "0.0.1",
     "scripts": {
         "dev": "astro dev",
-        "build": "astro build",
+        "build": "astro check && astro build",
         "preview": "astro preview",
-        "astro": "astro"
+        "format": "biome format --write .",
+        "lint": "biome lint .",
+        "check": "biome check .",
+        "check:fix": "biome check --write .",
+        "check:types": "astro check",
+        "ci": "biome ci . && astro check"
     },
     "dependencies": {
         "astro": "^7.1.1"
     },
     "devDependencies": {
+        "@biomejs/biome": "2.5.4",
         "@types/node": "^26.1.1",
         "typescript": "7.0.2"
     }

@@ -1,19 +1,14 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content'
 
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro'
 
 const posts = (
-    await getCollection(
-        "journal",
-        ({ data }) => !import.meta.env.PROD || !data.draft,
-    )
-).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+    await getCollection('journal', ({ data }) => !import.meta.env.PROD || !data.draft)
+).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
 ---
 
-<BaseLayout
-    title="Journal"
-    description="Artículos y notas sobre software e internet.">
+<BaseLayout title="Journal" description="Artículos y notas sobre software e internet.">
     <header>
         <h1>Journal</h1>
 
@@ -21,8 +16,7 @@ const posts = (
     </header>
 
     <ol>
-        {
-            posts.map((post) => (
+        {posts.map((post) => (
                 <li>
                     <article>
                         <h2>
@@ -38,7 +32,6 @@ const posts = (
                         </time>
                     </article>
                 </li>
-            ))
-        }
+            ))}
     </ol>
 </BaseLayout>

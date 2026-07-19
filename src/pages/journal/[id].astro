@@ -1,18 +1,16 @@
 ---
-import { getCollection, render, type CollectionEntry } from "astro:content";
-
-import BaseLayout from "../../layouts/BaseLayout.astro";
-
-import { site } from "../../data/site";
-import { formatDate } from "../../lib/date";
-import { path } from "../../lib/path";
+import { type CollectionEntry, getCollection, render } from 'astro:content'
+import { site } from '../../data/site'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { formatDate } from '../../lib/date'
+import { path } from '../../lib/path'
 
 interface Props {
-    post: CollectionEntry<"journal">;
+    post: CollectionEntry<'journal'>
 }
 
 export async function getStaticPaths() {
-    const posts = await getCollection("journal", ({ data }) => !data.draft);
+    const posts = await getCollection('journal', ({ data }) => !data.draft)
 
     return posts.map((post) => ({
         params: {
@@ -21,31 +19,24 @@ export async function getStaticPaths() {
         props: {
             post,
         },
-    }));
+    }))
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { post } = Astro.props
+const { Content } = await render(post)
 ---
 
-<BaseLayout
-    title={`${post.data.title} — ${site.name}`}
-    description={post.data.description}>
+<BaseLayout title={`${post.data.title} — ${site.name}`} description={post.data.description}>
     <article class="post">
         <header class="post-header frame">
             <div class="post-header-side">
-                <a
-                    class="back-link"
-                    href={path("journal/")}>
-                    ← Journal
-                </a>
+                <a class="back-link" href={path("journal/")}> ← Journal </a>
 
                 <dl>
                     <div>
                         <dt>Publicado</dt>
                         <dd>
-                            <time
-                                datetime={post.data.publishedAt.toISOString()}>
+                            <time datetime={post.data.publishedAt.toISOString()}>
                                 {formatDate(post.data.publishedAt)}
                             </time>
                         </dd>
@@ -56,15 +47,13 @@ const { Content } = await render(post);
                         <dd>{post.data.category}</dd>
                     </div>
 
-                    {
-                        post.data.tags.length > 0 && (
+                    {post.data.tags.length > 0 && (
                             <div>
                                 <dt>Etiquetas</dt>
 
                                 <dd>{post.data.tags.join(", ")}</dd>
                             </div>
-                        )
-                    }
+                        )}
                 </dl>
             </div>
 
@@ -82,7 +71,7 @@ const { Content } = await render(post);
         <div class="post-body frame">
             <aside class="post-aside">
                 <p>
-                    Escrito por<br />
+                    Escrito por<br>
                     <strong>{site.name}</strong>
                 </p>
             </aside>

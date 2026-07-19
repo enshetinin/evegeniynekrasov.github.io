@@ -1,14 +1,14 @@
 ---
-import { navigation, site } from "../data/site";
+import { navigation, site } from '../data/site'
 
-const currentPath = Astro.url.pathname;
+const currentPath = Astro.url.pathname
 
 function isActive(href: string): boolean {
-    if (href === "/") {
-        return currentPath === "/";
+    if (href === '/') {
+        return currentPath === '/'
     }
 
-    return currentPath.startsWith(href);
+    return currentPath.startsWith(href)
 }
 ---
 
@@ -23,8 +23,7 @@ function isActive(href: string): boolean {
 
     <nav aria-label="Navegación principal">
         <ul>
-            {
-                navigation.map((item) => (
+            {navigation.map((item) => (
                     <li>
                         <a
                             href={item.href}
@@ -34,8 +33,7 @@ function isActive(href: string): boolean {
                             {item.label}
                         </a>
                     </li>
-                ))
-            }
+                ))}
         </ul>
     </nav>
 

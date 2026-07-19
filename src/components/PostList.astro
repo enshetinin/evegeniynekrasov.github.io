@@ -1,19 +1,18 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry } from 'astro:content'
 
-import { formatDate } from "../lib/date";
-import { path } from "../lib/path";
+import { formatDate } from '../lib/date'
+import { path } from '../lib/path'
 
 interface Props {
-    posts: CollectionEntry<"journal">[];
+    posts: CollectionEntry<'journal'>[]
 }
 
-const { posts } = Astro.props;
+const { posts } = Astro.props
 ---
 
 <ul class="post-list">
-    {
-        posts.map((post) => (
+    {posts.map((post) => (
             <li class="post-list-item">
                 <a href={path(`journal/${post.id}/`)}>
                     <div class="post-list-main">
@@ -36,6 +35,5 @@ const { posts } = Astro.props;
                     </span>
                 </a>
             </li>
-        ))
-    }
+        ))}
 </ul>
