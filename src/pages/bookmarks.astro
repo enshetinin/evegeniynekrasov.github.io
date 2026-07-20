@@ -1,6 +1,6 @@
 ---
-import { bookmarks } from '../data/bookmarks'
-import BaseLayout from '../layouts/BaseLayout.astro'
+import { bookmarks } from "../data/bookmarks";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Bookmarks" description="Enlaces que quiero conservar.">
@@ -11,14 +11,16 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     </header>
 
     <ul>
-        {bookmarks.map((bookmark) => (
+        {
+            bookmarks.map((bookmark) => (
                 <li>
                     <article>
                         <h2>
                             <a
                                 href={bookmark.href}
                                 target="_blank"
-                                rel="noreferrer">
+                                rel="noreferrer"
+                            >
                                 {bookmark.title}
                             </a>
                         </h2>
@@ -28,6 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
                         <small>{bookmark.category}</small>
                     </article>
                 </li>
-            ))}
+            ))
+        }
     </ul>
 </BaseLayout>

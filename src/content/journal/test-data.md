@@ -11,3 +11,5 @@ draft: false
 ---
 
 Some test data
+
+![test-img](./test-img.jpg)

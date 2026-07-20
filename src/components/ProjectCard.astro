@@ -1,11 +1,11 @@
 ---
-import type { Project } from '../data/projects'
+import type { Project } from "../data/projects";
 
 interface Props {
-    project: Project
+    project: Project;
 }
 
-const { project } = Astro.props
+const { project } = Astro.props;
 ---
 
 <article class="project-card">
@@ -33,14 +33,17 @@ const { project } = Astro.props
         {project.technologies.map((technology) => <li>{technology}</li>)}
     </ul>
 
-    {project.repository && (
+    {
+        project.repository && (
             <a
                 class="text-link project-repository"
                 href={project.repository}
                 target="_blank"
-                rel="noreferrer">
+                rel="noreferrer"
+            >
                 Ver repositorio
                 <span aria-hidden="true">↗</span>
             </a>
-        )}
+        )
+    }
 </article>
